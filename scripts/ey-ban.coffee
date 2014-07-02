@@ -9,8 +9,9 @@
 #   HUBOT_VEREMA_ENV
 #
 # Commands:
-#   hubot ey check bans for|at rankia - Checks ban list for Rankia default environment
-#   hubot ey check bans for|at verema - Checks ban list for Verema default environment
+#   hubot ey check bans for|at|from rankia|verema <environment?> - Checks ban list for Rankia or Verema default or given environment
+#   hubot ey ban <ip> for|at|from rankia|verema <environment?> - Adds a ban for given ip adress at Rankia or Verema default or given environment
+#   hubot ey unban <ip> for|at|from rankia|verema <environment?> - Removes ban for given ip adress from Rankia or Verema default or given environment
 #
 # Author:
 #   Emergia dev team.
