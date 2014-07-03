@@ -32,7 +32,7 @@ module.exports = (robot) ->
     if not env?
       env = if app is 'rankia' then rankiaEnv else veremaEnv
 
-    eval(action + 'EngineYard')(env, ip, msg)
+    eval(action + 'EngineYard')(env, ip, msg, -> checkBansEngineYard(env, msg))
 
   robot.respond /ey check bans (?:for|at|from) (rankia|verema)(?:\s(\w*))?/i, (msg) ->
     app = msg.match[1]
@@ -43,28 +43,29 @@ module.exports = (robot) ->
 
     checkBansEngineYard(env, msg)
 
-  banEngineYard = (env, ip, msg) ->
+  banEngineYard = (env, ip, msg, callback) ->
     banCommand = "sudo iptables -I INPUT -s #{ ip } -j DROP"
     msg.send "Banning #{ ip } at Engine Yard #{ env } servers..."
-    callIptables(banCommand, env, msg)
+    callIptables(banCommand, env, msg, callback)
 
-  unbanEngineYard = (env, ip, msg) ->
+  unbanEngineYard = (env, ip, msg, callback) ->
     unbanCommand = "sudo iptables -D INPUT -s #{ ip } -j DROP"
     msg.send "Removing ban for #{ ip } at Engine Yard #{ env } servers..."
-    callIptables(unbanCommand, env, msg)
+    callIptables(unbanCommand, env, msg, callback)
 
-  checkBansEngineYard = (env, msg) ->
+  checkBansEngineYard = (env, msg, callback) ->
     checkBansCommand = "sudo iptables -nvL"
     msg.send "Checking bans at Engine Yard #{ env } servers..."
-    callIptables(checkBansCommand, env, msg)
+    callIptables(checkBansCommand, env, msg, callback)
 
-  callIptables = (iptablesCommand, env, msg) ->
+  callIptables = (iptablesCommand, env, msg, callback) ->
     command = "ey ssh \'#{ iptablesCommand }\' -e #{ env } --app-servers -t"
 
     child_process.exec command, (error, stdout, stderr) ->
+      msg.send "child_process callback: #{callback}"
       if error
         msg.send "Iptables command failed at #{ env } environment: "
         msg.send "\`\`\`#{ stderr }\`\`\`" # format output as code in Slack
       else
         msg.send "\`\`\`#{ stdout }\`\`\`"
-        msg.send 'Done'
+        callback() if callback
