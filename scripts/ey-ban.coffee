@@ -61,7 +61,6 @@ module.exports = (robot) ->
     command = "ey ssh \'#{ iptablesCommand }\' -e #{ env } --app-servers -t"
 
     child_process.exec command, (error, stdout, stderr) ->
-      msg.send "child_process callback: #{callback}"
       if error
         msg.send "Iptables command failed at #{ env } environment: "
         msg.send "\`\`\`#{ stderr }\`\`\`" # format output as code in Slack
