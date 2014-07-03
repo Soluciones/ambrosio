@@ -1,0 +1,34 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.3.6)
+    engineyard (2.3.3)
+      engineyard-cloud-client (~> 1.0.16)
+      engineyard-serverside-adapter (= 2.2.0)
+      escape (~> 0.0.4)
+      highline (~> 1.6.1)
+      launchy (~> 2.1)
+      net-ssh (~> 2.7)
+      rest-client (~> 1.6.0)
+    engineyard-cloud-client (1.0.16)
+      mime-types (~> 1.16)
+      multi_json (~> 1.6)
+      rest-client (~> 1.6.1)
+    engineyard-serverside-adapter (2.2.0)
+      escape (~> 0.0.4)
+      multi_json (~> 1.6)
+    escape (0.0.4)
+    highline (1.6.21)
+    launchy (2.4.2)
+      addressable (~> 2.3)
+    mime-types (1.25.1)
+    multi_json (1.10.1)
+    net-ssh (2.9.1)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  engineyard
