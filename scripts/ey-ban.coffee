@@ -28,19 +28,18 @@ module.exports = (robot) ->
     ip = msg.match[2]
     app = msg.match[3]
     env = msg.match[4]
-
     if not env?
       env = if app is 'rankia' then rankiaEnv else veremaEnv
-
-    eval(action + 'EngineYard')(env, ip, msg, -> checkBansEngineYard(env, msg))
+    switch action
+      when 'ban' then banEngineYard(env, ip, msg, -> checkBansEngineYard(env, msg))
+      when 'unban' then unbanEngineYard(env, ip, msg, -> checkBansEngineYard(env, msg))
+      else msg.send 'wrong command'
 
   robot.respond /ey check bans (?:for|at|from) (rankia|verema)(?:\s(\w*))?/i, (msg) ->
     app = msg.match[1]
     env = msg.match[2]
-
     if not env?
       env = if app is 'rankia' then rankiaEnv else veremaEnv
-
     checkBansEngineYard(env, msg)
 
   banEngineYard = (env, ip, msg, callback) ->
