@@ -38,7 +38,7 @@ module.exports = (robot) ->
 
   checkEngineYard = (app, env, msg) ->
     msg.send "Checking the status for #{ app }\/#{ env } at Engine Yard..."
-    child_process.exec "ey status --app=#{ app } -e #{ env }", (error, stdout, stderr) ->
+    child_process.exec "bundle exec ey status --app=#{ app } -e #{ env }", (error, stdout, stderr) ->
       if error
         msg.send "Status checking failed for #{ app } application and #{ env } environment: " + stderr
       else
