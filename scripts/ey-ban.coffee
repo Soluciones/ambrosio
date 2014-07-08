@@ -18,6 +18,7 @@
 
 child_process = require 'child_process'
 
+eyApiToken = process.env.EY_API_TOKEN
 rankiaEnv = process.env.HUBOT_RANKIA_ENV
 veremaEnv = process.env.HUBOT_VEREMA_ENV
 
@@ -58,7 +59,7 @@ module.exports = (robot) ->
     callIptables(checkBansCommand, env, msg, callback)
 
   callIptables = (iptablesCommand, env, msg, callback) ->
-    command = "ey ssh \'#{ iptablesCommand }\' -e #{ env } --app-servers -t"
+    command = "ey ssh \'#{ iptablesCommand }\' -e #{ env } --app-servers --api-token=#{ eyApiToken } -t"
 
     child_process.exec command, (error, stdout, stderr) ->
       if error

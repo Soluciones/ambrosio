@@ -21,6 +21,7 @@
 
 child_process = require 'child_process'
 
+eyApiToken = process.env.EY_API_TOKEN
 rankiaApp = process.env.HUBOT_RANKIA_APP
 rankiaEnv = process.env.HUBOT_RANKIA_ENV
 veremaApp = process.env.HUBOT_VEREMA_APP
@@ -38,7 +39,9 @@ module.exports = (robot) ->
 
   checkEngineYard = (app, env, msg) ->
     msg.send "Checking the status for #{ app }\/#{ env } at Engine Yard..."
-    child_process.exec "bundle exec ey status --app=#{ app } -e #{ env }", (error, stdout, stderr) ->
+    command = "ey status --app=#{ app } -e #{ env } --api-token=#{ eyApiToken }"
+
+    child_process.exec command, (error, stdout, stderr) ->
       if error
         msg.send "Status checking failed for #{ app } application and #{ env } environment: " + stderr
       else
