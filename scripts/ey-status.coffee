@@ -41,9 +41,6 @@ module.exports = (robot) ->
     msg.send "Checking the status for #{ app }\/#{ env } at Engine Yard..."
     command = "ey status --app=#{ app } -e #{ env } --api-token=#{ eyApiToken }"
 
-    child_process.exec "cat .ssh\/id_rsa", (error, stdout, stderr) ->
-      msg.send stdout+''
-
     child_process.exec command, (error, stdout, stderr) ->
       if error
         msg.send "Status checking failed for #{ app } application and #{ env } environment: " + stderr
